@@ -107,33 +107,168 @@ body{background:var(--wa-bg);font-family:'DM Sans',sans-serif;-webkit-font-smoot
 .wa-send:not(:disabled):hover{opacity:.88;}
 .wa-send:not(:disabled):active{transform:scale(.95);}
 @media(max-width:480px){.wa-bub{max-width:86%;}.wa-chat{padding:8px 10px 6px;}}
+
+/* QUALIFYING QUIZ GATE */
+#quiz{position:fixed;inset:0;background:linear-gradient(160deg,#0b141a 0%,#152a1e 100%);z-index:100;overflow-y:auto;padding:2rem 1.2rem 3rem;}
+.q-inner{max-width:440px;margin:0 auto;}
+.q-brand{text-align:center;margin-bottom:1.5rem;}
+.q-logo{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:.1em;color:var(--cream);line-height:1;}
+.q-tag{font-family:'Barlow Condensed',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-top:4px;}
+.q-progress{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:1.4rem;}
+.q-dot{width:6px;height:6px;border-radius:50%;background:rgba(240,235,224,.18);transition:all .35s;}
+.q-dot.active{background:var(--cream);width:22px;border-radius:3px;}
+.q-dot.done{background:rgba(240,235,224,.45);}
+.q-screen{display:none;}
+.q-screen.active{display:block;animation:waIn .3s ease both;}
+.q-card{background:rgba(240,235,224,.03);border:1px solid var(--line);border-radius:4px;padding:2rem 1.5rem;position:relative;overflow:hidden;}
+.q-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gold);}
+.q-step{font-family:'Barlow Condensed',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-muted);margin-bottom:1rem;}
+.q-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.6rem,6vw,2.4rem);letter-spacing:.03em;text-transform:uppercase;line-height:1;color:var(--cream);margin-bottom:.5rem;}
+.q-sub{font-size:.85rem;color:var(--wa-muted);line-height:1.6;margin-bottom:1.5rem;}
+.q-choices{display:flex;flex-direction:column;gap:8px;}
+.q-choice{background:rgba(240,235,224,.03);border:1px solid var(--line);border-radius:3px;padding:1rem 1.1rem;text-align:left;cursor:pointer;display:flex;align-items:flex-start;gap:.8rem;width:100%;transition:border-color .15s,background .15s;color:var(--cream);font-family:'DM Sans',sans-serif;}
+.q-choice:hover{background:rgba(240,235,224,.06);border-color:var(--gold-muted);}
+.q-choice-dot{width:9px;height:9px;border-radius:50%;border:1px solid var(--gold-muted);flex-shrink:0;margin-top:4px;}
+.q-choice-label{font-size:.92rem;color:var(--cream);line-height:1.4;}
+.q-choice-sub{font-family:'Barlow Condensed',sans-serif;font-size:.58rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--wa-muted);margin-top:2px;}
+.q-fields{display:flex;flex-direction:column;gap:11px;margin-bottom:1rem;}
+.q-field-label{font-family:'Barlow Condensed',sans-serif;font-size:.58rem;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--wa-muted);margin-bottom:5px;display:block;}
+.q-input{width:100%;background:var(--wa-bg);border:1px solid var(--line);border-radius:2px;padding:.8rem .9rem;font-family:'DM Sans',sans-serif;font-size:.95rem;color:var(--cream);outline:none;transition:border-color .2s;}
+.q-input:focus{border-color:var(--gold);}
+.q-input.err{border-color:#e74c3c;animation:shake .3s ease;}
+select.q-input{appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9a84c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px;}
+select.q-input option{background:var(--wa-header);color:var(--cream);}
+.q-btn{width:100%;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.18em;text-transform:uppercase;color:var(--bg-hero);background:var(--cream);border:none;border-radius:2px;padding:.95rem;cursor:pointer;transition:opacity .2s;margin-top:.3rem;}
+.q-btn:hover{opacity:.9;}
+.q-btn:disabled{opacity:.55;cursor:not-allowed;}
+.q-back{font-family:'Barlow Condensed',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--wa-muted);background:transparent;border:1px solid var(--line);border-radius:2px;padding:.55rem 1.2rem;cursor:pointer;display:block;width:fit-content;margin:.8rem auto 0;transition:color .2s,border-color .2s;}
+.q-back:hover{color:var(--cream);border-color:var(--gold-muted);}
+.q-err{font-size:.78rem;color:#e74c3c;min-height:1.1rem;margin-top:.3rem;}
+.q-note{font-family:'Barlow Condensed',sans-serif;font-size:.62rem;letter-spacing:.08em;color:var(--wa-muted);line-height:1.5;text-align:center;margin-top:.8rem;opacity:.8;}
+.q-gate-tag{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-size:.56rem;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--wa-muted);border:1px solid var(--line);border-radius:2px;padding:4px 11px;margin-bottom:1.1rem;}
+.q-gate-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.5rem,5.5vw,2.2rem);letter-spacing:.02em;text-transform:uppercase;color:var(--cream);line-height:1.02;margin-bottom:.9rem;}
+.q-gate-body{font-size:.86rem;color:var(--wa-muted);line-height:1.7;margin-bottom:1.2rem;}
+.q-gate-follow{background:rgba(240,235,224,.05);border:1px solid var(--gold-muted);border-radius:3px;padding:.9rem 1rem;font-family:'Barlow Condensed',sans-serif;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--wa-muted);line-height:1.5;margin-bottom:1.2rem;}
+.q-gate-follow strong{color:var(--gold);}
 </style>
+
+<!-- Lead notification rails (same as your 4210 quiz). Optional: delete these two script blocks to switch them off. -->
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','3403191219841069');fbq('track','PageView');</script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>(function(){if(typeof emailjs!=='undefined'){emailjs.init({publicKey:'B_3Is5PGeiMoU5w6I'});}})();</script>
 </head>
 <body>
 
-<!-- Hidden static form so Netlify detects and captures submissions (feeds Zapier -> MailerLite) -->
-<form name="supplement-leadmagnet" data-netlify="true" netlify-honeypot="bot-field" hidden>
-  <input type="text" name="name">
+<!-- Hidden static form so Netlify detects and captures submissions (feeds Zapier -> MailerLite). Same list as your 4210 quiz. -->
+<form name="peakfuelling-leads" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="peakfuelling-leads">
+  <input type="text" name="bot-field">
+  <input type="text" name="first-name">
   <input type="email" name="email">
+  <input type="text" name="instagram-handle">
+  <input type="text" name="position">
+  <input type="text" name="level">
+  <input type="text" name="user-age">
+  <input type="text" name="location">
+  <input type="text" name="lead-quality">
   <input type="text" name="source">
 </form>
 
-<!-- GATE -->
-<div id="gate">
-  <div class="gate-logo">Liam Carroll Nutrition</div>
-  <div class="gate-sub">Football Nutrition</div>
-  <div class="gate-title">The Supplement Cheatsheet</div>
-  <p class="gate-desc">The exact supplements that actually move the needle for footballers, and the ones burning your money. Grounded in peer-reviewed evidence. No hype.</p>
-  <ul class="gate-points">
-    <li>What to take, the dose, and when, for match and training day</li>
-    <li>The stuff with zero evidence you can bin today</li>
-    <li>What is safe if you get drug tested</li>
-  </ul>
-  <input class="gate-input" type="text" id="nameInput" placeholder="First name" autocomplete="given-name">
-  <input class="gate-input" type="email" id="emailInput" placeholder="Email" autocomplete="email" autocapitalize="off" autocorrect="off" spellcheck="false">
-  <button class="gate-btn" id="gateBtn" onclick="unlock()">Get instant access</button>
-  <div class="gate-error" id="gateError"></div>
-  <p class="gate-note">Free. Instant. No spam. Just the cheatsheet and the odd useful email you can leave any time.</p>
+<!-- QUALIFYING QUIZ GATE -->
+<div id="quiz">
+ <div class="q-inner">
+  <div class="q-brand">
+    <div class="q-logo">Liam Carroll Nutrition</div>
+    <div class="q-tag">The Supplement Cheatsheet</div>
+  </div>
+  <div class="q-progress" id="qProgress">
+    <div class="q-dot active" id="qd1"></div>
+    <div class="q-dot" id="qd2"></div>
+    <div class="q-dot" id="qd3"></div>
+  </div>
+
+  <!-- STEP 1: AGE -->
+  <div class="q-screen active" id="qs-age">
+   <div class="q-card">
+    <div class="q-step">Step 1 of 3 &nbsp;·&nbsp; Age Check</div>
+    <div class="q-title">How old are you?</div>
+    <p class="q-sub">This covers caffeine and performance supplements, so I need to confirm your age before we start.</p>
+    <div class="q-choices">
+      <button class="q-choice" onclick="selectAge('18plus')"><div class="q-choice-dot"></div><div><div class="q-choice-label">18 or over</div></div></button>
+      <button class="q-choice" onclick="selectAge('under18')"><div class="q-choice-dot"></div><div><div class="q-choice-label">Under 18</div></div></button>
+    </div>
+   </div>
+  </div>
+
+  <!-- STEP 2: LEVEL -->
+  <div class="q-screen" id="qs-level">
+   <div class="q-card">
+    <div class="q-step">Step 2 of 3 &nbsp;·&nbsp; Level</div>
+    <div class="q-title">What level do you play at?</div>
+    <p class="q-sub">The advice is calibrated to real training load and competitive demands, so this matters.</p>
+    <div class="q-choices">
+      <button class="q-choice" onclick="selectLevel('pro')"><div class="q-choice-dot"></div><div><div class="q-choice-label">Professional</div><div class="q-choice-sub">Full-time contract</div></div></button>
+      <button class="q-choice" onclick="selectLevel('semi')"><div class="q-choice-dot"></div><div><div class="q-choice-label">Semi-Professional</div><div class="q-choice-sub">Paid to play, part-time</div></div></button>
+      <button class="q-choice" onclick="selectLevel('amateur')"><div class="q-choice-dot"></div><div><div class="q-choice-label">Amateur / Sunday League</div><div class="q-choice-sub">Unpaid, recreational</div></div></button>
+      <button class="q-choice" onclick="selectLevel('academy')"><div class="q-choice-dot"></div><div><div class="q-choice-label">Academy / Youth</div><div class="q-choice-sub">Club academy or youth team</div></div></button>
+    </div>
+    <button class="q-back" onclick="goScreen('qs-age',1)">&larr; Back</button>
+   </div>
+  </div>
+
+  <!-- STEP 3: CONTACT -->
+  <div class="q-screen" id="qs-contact">
+   <div class="q-card">
+    <div class="q-step">Step 3 of 3 &nbsp;·&nbsp; Unlock</div>
+    <div class="q-title">Where do I send you in?</div>
+    <p class="q-sub">Drop your details and the cheatsheet opens straight away.</p>
+    <div class="q-fields">
+      <div><label class="q-field-label" for="qFirst">First name</label><input class="q-input" type="text" id="qFirst" placeholder="e.g. Jordan" autocomplete="given-name"></div>
+      <div><label class="q-field-label" for="qEmail">Email</label><input class="q-input" type="email" id="qEmail" placeholder="your@email.com" autocomplete="email" autocapitalize="off" spellcheck="false"></div>
+      <div><label class="q-field-label" for="qIg">Instagram handle</label><input class="q-input" type="text" id="qIg" placeholder="@yourhandle" autocomplete="off"></div>
+      <div><label class="q-field-label" for="qPos">Position</label>
+        <select class="q-input" id="qPos">
+          <option value="midfielder">Midfielder</option>
+          <option value="striker">Striker / Forward</option>
+          <option value="defender">Defender</option>
+          <option value="winger">Winger</option>
+          <option value="goalkeeper">Goalkeeper</option>
+        </select></div>
+      <div><label class="q-field-label" for="qCountry">Country</label>
+        <select class="q-input" id="qCountry">
+          <option value="" disabled selected>Select your country</option>
+          <option>United Kingdom</option><option>Ireland</option><option>Australia</option><option>United States</option><option>Canada</option><option>Germany</option><option>Netherlands</option><option>Spain</option><option>France</option><option>Italy</option><option>Portugal</option><option>Sweden</option><option>Norway</option><option>Denmark</option><option>Belgium</option><option>South Africa</option><option>New Zealand</option><option>Other</option>
+        </select></div>
+    </div>
+    <div class="q-err" id="qErr"></div>
+    <button class="q-btn" id="qSubmit" onclick="submitLead()">Open the cheatsheet</button>
+    <button class="q-back" onclick="goScreen('qs-level',2)">&larr; Back</button>
+   </div>
+  </div>
+
+  <!-- GATE OUT: AGE -->
+  <div class="q-screen" id="qs-out-age">
+   <div class="q-card">
+    <div class="q-gate-tag">Not quite there yet</div>
+    <div class="q-gate-title">Come back when you hit 18</div>
+    <p class="q-gate-body">This one runs for players 18 and over, purely because of the caffeine and supplement side. Not a judgement, just how it is set up to work properly.</p>
+    <div class="q-gate-follow">Follow <strong>@liamcarrollnutrition</strong> on Instagram in the meantime. Plenty there that is useful right now.</div>
+    <button class="q-back" onclick="resetQuiz()">&larr; Go back</button>
+   </div>
+  </div>
+
+  <!-- GATE OUT: LEVEL -->
+  <div class="q-screen" id="qs-out-level">
+   <div class="q-card">
+    <div class="q-gate-tag">Not the right fit right now</div>
+    <div class="q-gate-title">I would not be confident getting you the result yet</div>
+    <p class="q-gate-body">This is built around the demands of semi-pro and pro football, the training load and marginal-gain mindset that comes with it. Honest answer, I would not be confident getting you the result at amateur or academy level. That is on me, not a reflection on your football.</p>
+    <div class="q-gate-follow">Keep following <strong>@liamcarrollnutrition</strong>. The free content is genuinely useful where you are now. When the level is there, come back.</div>
+    <button class="q-back" onclick="resetQuiz()">&larr; Go back</button>
+   </div>
+  </div>
+
+ </div>
 </div>
 
 <!-- APP -->
@@ -167,7 +302,8 @@ body{background:var(--wa-bg);font-family:'DM Sans',sans-serif;-webkit-font-smoot
 const FREE_LIMIT   = 5;                              // free questions before the upgrade wall
 const APPLY_URL    = "https://apply.peakfuelling.com"; // primary CTA destination
 const WHATSAPP_URL = "https://wa.me/447956658150";     // 07956 658150 in international format
-const FORM_NAME    = "supplement-leadmagnet";          // must match the hidden form name above
+const FORM_NAME    = "peakfuelling-leads";             // Netlify form (same lead list as your 4210 quiz)
+const SOURCE       = "Supplement Cheatsheet";          // tags which tool the lead came from
 /* ============================================================ */
 
 const SYSTEM_PROMPT = `You are a football-specific sports nutrition assistant for Liam Carroll Nutrition, run by Liam Carroll (MSc Sports Nutrition, SENr Registered). You answer questions about supplements strictly based on the peer-reviewed evidence base provided below. Nothing else.
@@ -274,35 +410,71 @@ function loadState(){try{return JSON.parse(localStorage.getItem(STORE_KEY))||{};
 function saveState(s){try{localStorage.setItem(STORE_KEY,JSON.stringify(s));}catch(e){}}
 function persist(){const s=loadState();s.used=questionsUsed;s.walled=walled;saveState(s);}
 
-/* ---------- GATE / EMAIL CAPTURE ---------- */
+/* ---------- QUALIFYING QUIZ + LEAD CAPTURE (mirrors the 4210 quiz) ---------- */
 function validEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);}
 function encodeForm(data){return Object.keys(data).map(k=>encodeURIComponent(k)+"="+encodeURIComponent(data[k])).join("&");}
-
-async function unlock(){
-  const name=document.getElementById("nameInput").value.trim();
-  const email=document.getElementById("emailInput").value.trim();
-  const err=document.getElementById("gateError");
-  const btn=document.getElementById("gateBtn");
-  if(!name){shake("nameInput");err.textContent="Pop your first name in.";return;}
-  if(!validEmail(email)){shake("emailInput");err.textContent="That email does not look right.";return;}
-  err.textContent="";btn.disabled=true;btn.textContent="One sec...";
-
-  // Fire the lead into Netlify Forms (Zapier picks it up -> MailerLite). Never trap the user if it hiccups.
-  try{
-    await fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},
-      body:encodeForm({"form-name":FORM_NAME,name:name,email:email,source:"supplement-cheatsheet"})});
-  }catch(e){/* deliver anyway */}
-
-  saveState({optedIn:true,name:name,email:email,used:0,walled:false});
-  document.getElementById("gate").style.display="none";
-  document.getElementById("app").style.display="flex";
-  updateCount();
-  setTimeout(()=>addMsg("assistant","Right "+esc(name)+", ask me about any supplement and I will tell you exactly what the evidence says for footballers. Dose, timing, whether it is worth your money. Fire away."),650);
-}
 function shake(id){const el=document.getElementById(id);el.classList.add("err");setTimeout(()=>el.classList.remove("err"),400);}
 
-document.getElementById("emailInput").addEventListener("keydown",e=>{if(e.key==="Enter")unlock();});
-document.getElementById("nameInput").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("emailInput").focus();});
+let quizAge=null,quizLevel=null;
+
+function goScreen(id,step){
+  document.querySelectorAll("#quiz .q-screen").forEach(s=>s.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  const p=document.getElementById("qProgress");if(p)p.style.visibility="visible";
+  for(let i=1;i<=3;i++){const d=document.getElementById("qd"+i);if(!d)continue;d.classList.remove("active","done");if(i<step)d.classList.add("done");else if(i===step)d.classList.add("active");}
+  document.getElementById("quiz").scrollTop=0;
+}
+function gateOut(id){
+  document.querySelectorAll("#quiz .q-screen").forEach(s=>s.classList.remove("active"));
+  const p=document.getElementById("qProgress");if(p)p.style.visibility="hidden";
+  document.getElementById(id).classList.add("active");
+  document.getElementById("quiz").scrollTop=0;
+}
+function selectAge(v){quizAge=v;if(v==="under18"){gateOut("qs-out-age");}else{goScreen("qs-level",2);}}
+function selectLevel(v){quizLevel=v;if(v==="amateur"||v==="academy"){gateOut("qs-out-level");}else{goScreen("qs-contact",3);}}
+function resetQuiz(){quizAge=null;quizLevel=null;goScreen("qs-age",1);}
+
+async function submitLead(){
+  const fn=document.getElementById("qFirst").value.trim();
+  const em=document.getElementById("qEmail").value.trim();
+  let ig=document.getElementById("qIg").value.trim();if(ig.startsWith("@"))ig=ig.slice(1);
+  const pos=document.getElementById("qPos").value;
+  const country=document.getElementById("qCountry").value;
+  const err=document.getElementById("qErr");const btn=document.getElementById("qSubmit");
+  ["qFirst","qEmail","qCountry"].forEach(id=>document.getElementById(id).classList.remove("err"));
+  err.textContent="";
+  let bad=false;
+  if(!fn){shake("qFirst");bad=true;}
+  if(!validEmail(em)){shake("qEmail");bad=true;}
+  if(!country){shake("qCountry");bad=true;}
+  if(bad){err.textContent="Fill in your name, a valid email and your country.";return;}
+  btn.disabled=true;btn.textContent="One sec...";
+
+  // Lead quality: Pro = HOT always. Semi-pro + UK/Ireland = HOT, elsewhere = WARM.
+  const ukIreland=["United Kingdom","Ireland"];
+  const leadQuality=(quizLevel==="pro"||ukIreland.indexOf(country)!==-1)?"HOT":"WARM";
+
+  // Netlify capture -> Zapier -> MailerLite + Netlify notification. Never trap the user if it hiccups.
+  try{
+    await fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},
+      body:encodeForm({"form-name":FORM_NAME,"bot-field":"","first-name":fn,"email":em,"instagram-handle":ig,"position":pos,"level":quizLevel,"user-age":quizAge==="18plus"?"18":"17","location":country,"lead-quality":leadQuality,"source":SOURCE})});
+  }catch(e){/* let them in anyway */}
+  if(typeof fbq!=="undefined"){try{fbq("track","Lead");}catch(e){}}
+  if(typeof emailjs!=="undefined"){try{emailjs.send("service_34l9gku","4210.Lead",{first_name:fn,email:em,instagram:ig,level:quizLevel,position:pos,location:country,lead_quality:leadQuality,tool:SOURCE});}catch(e){}}
+
+  saveState({optedIn:true,name:fn,email:em,used:0,walled:false});
+  unlockChat(fn);
+}
+
+function unlockChat(name){
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("app").style.display="flex";
+  questionsUsed=0;updateCount();
+  setTimeout(()=>addMsg("assistant","Right "+esc(name)+", ask me about any supplement and I will tell you exactly what the evidence says for footballers. Dose, timing, whether it is worth your money. Fire away."),650);
+}
+
+document.getElementById("qEmail").addEventListener("keydown",e=>{if(e.key==="Enter")submitLead();});
+document.getElementById("qFirst").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("qEmail").focus();});
 
 function nowTime(){const d=new Date();return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");}
 
@@ -427,11 +599,11 @@ function sendFromInput(){send(document.getElementById("input").value);}
 function handleKey(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendFromInput();}}
 function autoResize(el){el.style.height="22px";el.style.height=Math.min(el.scrollHeight,120)+"px";document.getElementById("sendBtn").disabled=!el.value.trim()||walled;}
 
-/* ---------- RETURNING VISITOR: no fresh 5, drop them back where they left off ---------- */
+/* ---------- RETURNING VISITOR: skip the quiz, no fresh 5, drop them back where they left off ---------- */
 (function(){
   const s=loadState();
   if(!s||!s.optedIn)return;
-  document.getElementById("gate").style.display="none";
+  document.getElementById("quiz").style.display="none";
   document.getElementById("app").style.display="flex";
   if(s.walled||(s.used||0)>=FREE_LIMIT){questionsUsed=FREE_LIMIT;showWall();return;}
   questionsUsed=s.used||0;updateCount();
