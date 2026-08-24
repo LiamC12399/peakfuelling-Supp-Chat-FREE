@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Supplement Cheatsheet | Liam Carroll Nutrition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wa-bg:#0b141a;--wa-header:#1a1a2e;--wa-input-bg:#2a3942;
+  --wa-out:#1a1a2e;--wa-in:#16213e;--wa-text:#e9edef;--wa-muted:#8696a0;
+  --wa-divider:rgba(240,235,224,.1);
+  --gold:#c9a84c;--gold-dim:rgba(201,168,76,.15);--gold-muted:rgba(201,168,76,.55);
+  --cream:#f0ebe0;--line:rgba(240,235,224,.12);
+  --bg-hero:#152a1e;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--wa-bg);font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased;height:100dvh;overflow:hidden;}
+
+/* GATE */
+#gate{position:fixed;inset:0;background:linear-gradient(160deg,#0b141a 0%,#152a1e 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center;z-index:100;overflow-y:auto;}
+.gate-logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.12em;color:var(--cream);margin-bottom:4px;}
+.gate-sub{font-family:'Barlow Condensed',sans-serif;font-size:.65rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:2.5rem;}
+.gate-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(1.8rem,6vw,2.8rem);letter-spacing:.04em;color:var(--cream);line-height:1;margin-bottom:.8rem;max-width:420px;}
+.gate-desc{font-size:.9rem;color:var(--wa-muted);margin-bottom:1.8rem;max-width:340px;line-height:1.6;}
+.gate-input{width:100%;max-width:320px;background:rgba(240,235,224,.06);border:1px solid var(--gold-muted);color:var(--cream);font-family:'DM Sans',sans-serif;font-size:1rem;padding:.85rem 1.1rem;text-align:center;outline:none;border-radius:2px;transition:border-color .2s;margin-bottom:.7rem;}
+.gate-input::placeholder{color:var(--wa-muted);}
+.gate-input:focus{border-color:var(--gold);}
+.gate-input.err{border-color:#e74c3c;animation:shake .3s ease;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.gate-btn{width:100%;max-width:320px;font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:.18em;color:var(--bg-hero);background:var(--cream);border:none;padding:1rem;cursor:pointer;border-radius:2px;transition:opacity .2s;margin-top:.3rem;}
+.gate-btn:hover{opacity:.9;}
+.gate-btn:disabled{opacity:.55;cursor:not-allowed;}
+.gate-error{font-size:.8rem;color:#e74c3c;margin-top:.5rem;min-height:1.2rem;}
+.gate-points{list-style:none;max-width:320px;text-align:left;margin:0 auto 1.6rem;padding:0;}
+.gate-points li{font-size:.82rem;color:var(--cream);opacity:.85;margin-bottom:.5rem;padding-left:1.4rem;position:relative;line-height:1.4;}
+.gate-points li::before{content:'';position:absolute;left:0;top:.45rem;width:7px;height:7px;border-radius:50%;background:var(--gold);}
+.gate-note{font-family:'Barlow Condensed',sans-serif;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--wa-muted);margin-top:1.4rem;opacity:.65;max-width:320px;line-height:1.5;}
+
+/* APP */
+#app{display:flex;flex-direction:column;height:100dvh;}
+.wa-header{background:var(--wa-header);padding:10px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0;border-bottom:1px solid var(--wa-divider);}
+.wa-avatar{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#8b6914);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:16px;color:#0b141a;flex-shrink:0;letter-spacing:.04em;}
+.wa-info{flex:1;}
+.wa-name{font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;color:var(--cream);line-height:1.2;}
+.wa-badge{font-family:'Barlow Condensed',sans-serif;font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#0b141a;background:var(--gold);padding:2px 7px;border-radius:2px;display:inline-block;margin-top:2px;}
+.wa-status{font-size:11px;color:var(--gold-muted);margin-top:3px;display:flex;align-items:center;gap:4px;}
+.wa-online-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;}
+.wa-count{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-muted);flex-shrink:0;text-align:right;line-height:1.2;}
+.wa-chat{flex:1;overflow-y:auto;padding:12px 16px 8px;display:flex;flex-direction:column;gap:2px;background-color:var(--wa-bg);background-image:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23182229' fill-opacity='0.3'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+.wa-chat::-webkit-scrollbar{width:3px;}
+.wa-chat::-webkit-scrollbar-thumb{background:rgba(201,168,76,.2);border-radius:2px;}
+.wa-date-div{text-align:center;margin:8px 0;}
+.wa-date-div span{font-size:12px;color:var(--wa-muted);background:rgba(11,20,26,.85);padding:4px 10px;border-radius:8px;display:inline-block;}
+.wa-row{display:flex;margin-bottom:2px;}
+.wa-row.out{justify-content:flex-end;}
+.wa-row.in{justify-content:flex-start;}
+.wa-row.out+.wa-row.in,.wa-row.in+.wa-row.out{margin-top:6px;}
+.wa-bub{max-width:72%;padding:8px 12px 6px;font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.55;color:var(--wa-text);position:relative;word-wrap:break-word;animation:waIn .15s ease forwards;}
+@keyframes waIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:translateY(0)}}
+.wa-row.out .wa-bub{background:var(--wa-out);border-radius:8px 8px 2px 8px;border:1px solid rgba(201,168,76,.15);}
+.wa-row.in .wa-bub{background:var(--wa-in);border-radius:8px 8px 8px 2px;border:1px solid rgba(240,235,224,.06);}
+.wa-row.out .wa-bub::after{content:'';position:absolute;bottom:0;right:-8px;width:0;height:0;border-style:solid;border-width:0 0 10px 10px;border-color:transparent transparent var(--wa-out) transparent;}
+.wa-row.in .wa-bub::after{content:'';position:absolute;bottom:0;left:-8px;width:0;height:0;border-style:solid;border-width:0 10px 10px 0;border-color:transparent var(--wa-in) transparent transparent;}
+.wa-bub p{margin-bottom:6px;}
+.wa-bub p:last-child{margin-bottom:0;}
+.wa-bub .mh{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:.08em;color:var(--gold);margin:14px 0 4px;padding-bottom:4px;border-bottom:1px solid rgba(201,168,76,.2);}
+.wa-bub .mh:first-child{margin-top:0;}
+.wa-bub strong{font-weight:600;color:var(--cream);}
+.wa-bub ul,.wa-bub ol{padding-left:18px;margin-bottom:6px;}
+.wa-bub li{margin-bottom:3px;line-height:1.5;}
+.wa-bub .pf-tag{margin-top:10px;padding-top:8px;border-top:1px solid rgba(201,168,76,.15);font-size:11px;color:var(--gold-muted);font-style:italic;}
+.wa-meta{display:flex;align-items:center;justify-content:flex-end;gap:4px;margin-top:3px;}
+.wa-time{font-size:11px;color:rgba(134,150,160,.7);}
+.wa-tick{color:var(--gold);font-size:12px;}
+.wa-typing-row{display:flex;justify-content:flex-start;margin-bottom:4px;}
+.wa-typing-bub{background:var(--wa-in);padding:12px 16px;border-radius:8px 8px 8px 2px;border:1px solid rgba(240,235,224,.06);display:flex;gap:4px;align-items:center;}
+.wa-typing-bub span{width:7px;height:7px;border-radius:50%;background:var(--gold-muted);animation:waDot 1.3s infinite;}
+.wa-typing-bub span:nth-child(2){animation-delay:.2s;}
+.wa-typing-bub span:nth-child(3){animation-delay:.4s;}
+@keyframes waDot{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-5px);opacity:1}}
+.wa-chips{display:flex;flex-wrap:wrap;gap:7px;padding:5px 0 4px;animation:waIn .2s ease forwards;}
+.wa-chip{background:transparent;border:1.5px solid var(--gold-muted);color:var(--gold);font-family:'DM Sans',sans-serif;font-size:13px;padding:6px 15px;border-radius:20px;cursor:pointer;transition:background .18s,color .18s,border-color .18s;white-space:nowrap;}
+.wa-chip:hover,.wa-chip:active{background:var(--gold);color:#0b141a;border-color:var(--gold);}
+
+/* UPGRADE WALL */
+.wa-wall{background:linear-gradient(160deg,#152a1e 0%,#0e1f16 100%);border:1px solid var(--gold-muted);border-radius:12px;padding:20px 18px;margin:10px 2px 6px;animation:waIn .25s ease forwards;}
+.wa-wall .wl-kicker{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.wa-wall h3{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:.03em;color:var(--cream);line-height:1.05;margin-bottom:10px;}
+.wa-wall p{font-size:13.5px;color:var(--cream);opacity:.85;line-height:1.55;margin-bottom:12px;}
+.wa-wall ul{list-style:none;padding:0;margin:0 0 16px;}
+.wa-wall li{font-size:13px;color:var(--cream);opacity:.9;padding-left:1.3rem;position:relative;margin-bottom:6px;line-height:1.4;}
+.wa-wall li::before{content:'';position:absolute;left:0;top:.4rem;width:6px;height:6px;border-radius:50%;background:var(--gold);}
+.wl-btn{display:block;width:100%;text-align:center;text-decoration:none;font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:.16em;padding:.85rem;border-radius:3px;margin-bottom:9px;transition:opacity .18s,transform .1s;}
+.wl-btn.primary{background:var(--cream);color:var(--bg-hero);}
+.wl-btn.secondary{background:transparent;color:var(--cream);border:1.5px solid var(--gold-muted);}
+.wl-btn:hover{opacity:.9;}
+.wl-btn:active{transform:scale(.99);}
+
+.wa-input-bar{background:var(--wa-header);padding:8px 12px;display:flex;gap:8px;align-items:flex-end;flex-shrink:0;border-top:1px solid var(--wa-divider);}
+.wa-text-wrap{flex:1;background:var(--wa-input-bg);border-radius:24px;padding:10px 18px;display:flex;align-items:center;}
+.wa-text-wrap textarea{width:100%;background:transparent;border:none;outline:none;color:var(--wa-text);font-family:'DM Sans',sans-serif;font-size:15px;resize:none;max-height:120px;min-height:22px;line-height:1.4;display:block;}
+.wa-text-wrap textarea::placeholder{color:var(--wa-muted);}
+.wa-send{width:48px;height:48px;border-radius:50%;background:var(--gold);color:#0b141a;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:opacity .18s,transform .1s;}
+.wa-send:disabled{background:#2a3942;color:var(--wa-muted);cursor:not-allowed;}
+.wa-send:not(:disabled):hover{opacity:.88;}
+.wa-send:not(:disabled):active{transform:scale(.95);}
+@media(max-width:480px){.wa-bub{max-width:86%;}.wa-chat{padding:8px 10px 6px;}}
+</style>
+</head>
+<body>
+
+<!-- Hidden static form so Netlify detects and captures submissions (feeds Zapier -> MailerLite) -->
+<form name="supplement-leadmagnet" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="text" name="name">
+  <input type="email" name="email">
+  <input type="text" name="source">
+</form>
+
+<!-- GATE -->
+<div id="gate">
+  <div class="gate-logo">Liam Carroll Nutrition</div>
+  <div class="gate-sub">Football Nutrition</div>
+  <div class="gate-title">The Supplement Cheatsheet</div>
+  <p class="gate-desc">The exact supplements that actually move the needle for footballers, and the ones burning your money. Grounded in peer-reviewed evidence. No hype.</p>
+  <ul class="gate-points">
+    <li>What to take, the dose, and when, for match and training day</li>
+    <li>The stuff with zero evidence you can bin today</li>
+    <li>What is safe if you get drug tested</li>
+  </ul>
+  <input class="gate-input" type="text" id="nameInput" placeholder="First name" autocomplete="given-name">
+  <input class="gate-input" type="email" id="emailInput" placeholder="Email" autocomplete="email" autocapitalize="off" autocorrect="off" spellcheck="false">
+  <button class="gate-btn" id="gateBtn" onclick="unlock()">Get instant access</button>
+  <div class="gate-error" id="gateError"></div>
+  <p class="gate-note">Free. Instant. No spam. Just the cheatsheet and the odd useful email you can leave any time.</p>
+</div>
+
+<!-- APP -->
+<div id="app" style="display:none;">
+  <div class="wa-header">
+    <div class="wa-avatar">LC</div>
+    <div class="wa-info">
+      <div class="wa-name">Liam Carroll Nutrition</div>
+      <div class="wa-badge">Supplement Cheatsheet</div>
+      <div class="wa-status"><div class="wa-online-dot"></div>Evidence-based answers only</div>
+    </div>
+    <div class="wa-count" id="countLabel"></div>
+  </div>
+  <div class="wa-chat" id="chat">
+    <div class="wa-date-div"><span>Today</span></div>
+  </div>
+  <div class="wa-input-bar">
+    <div class="wa-text-wrap">
+      <textarea id="input" placeholder="Ask about any supplement..." rows="1" onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+    </div>
+    <button class="wa-send" id="sendBtn" onclick="sendFromInput()" disabled aria-label="Send">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   EASY-EDIT CONFIG  (change these, nothing else)
+   ============================================================ */
+const FREE_LIMIT   = 5;                              // free questions before the upgrade wall
+const APPLY_URL    = "https://apply.peakfuelling.com"; // primary CTA destination
+const WHATSAPP_URL = "https://wa.me/447956658150";     // 07956 658150 in international format
+const FORM_NAME    = "supplement-leadmagnet";          // must match the hidden form name above
+/* ============================================================ */
+
+const SYSTEM_PROMPT = `You are a football-specific sports nutrition assistant for Liam Carroll Nutrition, run by Liam Carroll (MSc Sports Nutrition, SENr Registered). You answer questions about supplements strictly based on the peer-reviewed evidence base provided below. Nothing else.
+
+PERSONALITY: Knowledgeable, direct, no-nonsense. Short messages. Real language, not academic. Never use em dashes. No waffle.
+
+STRICT RULES:
+- You ONLY answer questions about supplements as they relate to football performance, recovery, or health.
+- You ONLY draw on the evidence base provided below. Do not use any external knowledge about supplements.
+- If a supplement is not covered in the evidence base, say: "That one is not in the evidence base I work from. Message Liam directly on WhatsApp if you want his take on it."
+- If someone asks something completely unrelated to supplements or nutrition, say: "That is outside what I can help with here. Message Liam directly."
+- Never make up studies, dosages, or claims not grounded in the evidence base below.
+- Never recommend anything prohibited under WADA without flagging it.
+- Always end supplement recommendations with: "Built by Liam Carroll Nutrition."
+
+CROSS-REFERRALS:
+- If someone asks about matchday nutrition, pre-match meals, meal planning, or weekly fuelling, say: "That is the meal planner's territory. Head to meal.peakfuelling.com for that."
+- If someone asks about post-match recovery food or what to eat after a game, say: "The Rapid Reload Calculator covers that. Head to reload.peakfuelling.com."
+
+LOOP BEHAVIOUR:
+- After answering fully, always end with: "What else do you want to know about?" Keep the conversation going until they say they are done. Never end the conversation cold.
+- If they have no more questions, say: "All good. Message Liam directly on 07956 658150 if anything else comes up."
+
+EVIDENCE BASE - FOOTBALL SUPPLEMENTS:
+
+CAFFEINE:
+Evidence level: Highest across team sport. Recommended by over 90% of elite European sports nutritionists.
+Performance benefits: Significantly improves distance covered (SMD 0.29), jump height (SMD 0.37), and agility (SMD -0.38) vs placebo across 21 RCTs in footballers (Luo et al., 2025). Also improves passing accuracy and sprint ability (Abreu et al., 2023).
+Dose: 3 to 6mg per kg bodyweight. Take 30 to 60 minutes before kick-off or high-intensity training.
+Format: Caffeine tablets (precise dosing) or caffeinated gum (absorbed faster via buccal mucosa in 15 to 20 minutes, useful for substitutes at half-time).
+Cautions: Habitual daily use builds tolerance. 4 to 7 day abstinence before important matches restores full response. Avoid within 6 hours of sleep. Caffeine metabolism slows in the luteal phase for female players. Avoid proprietary blend pre-workouts with undisclosed ingredient quantities.
+
+CREATINE MONOHYDRATE:
+Evidence level: Highest for team sport athletes. Over 90% of elite European sports nutritionists recommend it.
+Performance benefits: Significantly improves jump height (SMD 0.33). Combined with sodium bicarbonate produces very large reductions in sprint time (SMD -1.4). Magnesium creatine chelate over 16 weeks produces very large improvements in repeated sprint power (Luo et al., 2025). Also supports glycogen resynthesis - 82% greater increase in muscle glycogen when combined with carbohydrate loading in first 24 hours (Roberts et al., 2016).
+Dose: 3 to 5g per day. No loading phase needed. Consistency matters more than timing.
+Format: Creatine monohydrate only. No other form has demonstrated superior efficacy.
+Cautions: Initial bodyweight increase of 0.5 to 1kg is water drawn into muscle - sign it is working. For professional players use Informed Sport or HASTA certified products only. No exceptions.
+
+DIETARY NITRATE (BEETROOT):
+Evidence level: Strong for recovery in congested fixture windows.
+Performance benefits: 7 days of beetroot juice (~500mg nitrate per day) significantly attenuated post-match declines in countermovement jump, maximal voluntary contraction, and 20m sprint vs placebo (Daab et al., 2021). Nyakayiru et al. (2017) showed 3.4% improvement in Yo-Yo IR1 performance.
+Dose: 400 to 800mg nitrate per dose (1 to 2 concentrated shots of 70ml each).
+Timing: 2 to 3 hours before kick-off. Peak blood nitrate at 2 to 3 hours post-ingestion. Double dose the evening before important matches combined with single shot on match morning for the strongest protocol.
+Cautions: Turns urine pink or red - completely harmless. Use concentrated shots (Beet It Sport) for consistent dosing. Effects more consistent in players with lower baseline dietary nitrate intake. Effects may be reduced in highly trained elite players.
+
+TART CHERRY:
+Evidence level: Good for recovery in congested fixture periods.
+Performance benefits: Bell et al. (2016) confirmed accelerated recovery following prolonged repeated-sprint activity in semi-professional footballers. Reduces inflammatory markers, muscle soreness, and supports sleep quality.
+Dose: 30ml concentrate twice daily (morning and evening).
+Protocol: 4 to 5 day protocol - start 2 days before a match, continue through match day and 2 days after. Single-dose use produces weaker effect.
+Cautions: Reserve for congested fixture windows. Avoid chronic year-round use through pre-season as high antioxidant doses may blunt training adaptations.
+
+PROTEIN:
+Evidence level: Strong. Widely accepted.
+Performance benefits: Supplementation to achieve 1.5g/kg/day through whey or soy significantly reduced performance deterioration during successive speed-endurance training sessions (Kritikos et al., 2021). Milk protein supplementation improved sprint times, jump height, and recovery kinetics during congested fixture schedules (Poulios et al., 2018).
+Daily target: 1.6 to 2.2g/kg bodyweight per day from all sources.
+Post-match dose: 40g immediately post-match. 40g stimulates greater myofibrillar protein synthesis than 20g regardless of lean body mass (Macnaughton et al., 2016).
+Pre-sleep: 30 to 40g casein before bed supports overnight muscle repair (Trommelen and Van Loon, 2016). Cottage cheese (200g) is the most practical food source.
+Format: Whey protein for post-training (fastest absorbed, highest leucine). Casein for pre-sleep (slow release). Whey and soy show equivalent benefits for footballers.
+Cautions: Food first. Supplements fill the gap when food is impractical, especially after evening matches.
+
+VITAMIN D3:
+Evidence level: Good. Widespread deficiency in footballers.
+Performance benefits: Associated with increased injury risk, reduced muscle force production, and impaired immune function when deficient. RCT evidence confirmed improved physical performance in young male footballers following supplementation (Brzezian'ski et al., 2022). Higher pre-exercise vitamin D status correlated with faster recovery of skeletal muscle strength after muscular injury (Barker et al., 2013).
+Dose: 1000 to 2000 IU per day with the largest meal. D3 (cholecalciferol) only - significantly more effective than D2.
+Cautions: Annual blood testing recommended for professional players. Female players have additional bone stress injury risk factors. Combine with calcium and adequate training load management.
+
+OMEGA-3 (EPA and DHA):
+Evidence level: Good for recovery and inflammation.
+Performance benefits: Reduces inflammatory markers and supports recovery between sessions. 8 weeks of fish oil supplementation (1.86g EPA and 1.50g DHA) increased muscle protein synthesis and upregulated anabolic cell signalling (Smith et al., 2011). Reduces exercise-induced muscle soreness and oxidative stress 48 hours after exercise.
+Dose: 2 to 3g EPA and DHA per day. Check label for total EPA and DHA, not total fish oil weight.
+Format: Fish oil capsules or liquid. Algae-based for plant-based players.
+Cautions: Split across two doses if taking 3g or more. Athletes with bleeding issues should consult a physician before large doses.
+
+MAGNESIUM:
+Evidence level: Practical. Very common deficiency in footballers.
+Benefits: Footballers lose magnesium through sweat. Deficiency impairs muscle contraction, increases cramp frequency, and disrupts sleep quality.
+Dose: 200 to 400mg per day. Fixed dose - not bodyweight dependent.
+Format: Magnesium glycinate or bisglycinate. Avoid magnesium oxide - poorly absorbed.
+Timing: 30 to 60 minutes before bed.
+
+COLLAGEN PEPTIDES AND VITAMIN C:
+Evidence level: Good for tendon and soft tissue health.
+Performance benefits: 15g collagen peptides combined with 50mg vitamin C, taken 1 hour before exercise, significantly increases collagen synthesis markers vs placebo (Shaw et al., 2017). 10g collagen hydrolysate daily decreased knee pain in athletes over 24 weeks (Clark et al., 2008).
+Dose: 15g hydrolysed collagen peptides with 50mg vitamin C.
+Timing: 1 hour before training or rehabilitation. Timing is critical - post-training does not produce the same stimulus.
+Best used for: Players managing chronic tendon issues, returning from soft tissue injury, or with high tendon loading in training.
+
+SUPPLEMENTS WITH NO EVIDENCE FOR FOOTBALLERS:
+- Yohimbine: Only RCT in footballers found no performance effect across any measure (Ostojic, 2006). EFSA raised safety concerns about yohimbe bark preparations.
+- Fat burners and thermogenics: No meaningful body composition change beyond caffeine alone. High contamination and WADA risk.
+- Testosterone boosters: No clinically meaningful testosterone increase in healthy males. Contamination risk with prohibited substances.
+- BCAAs: Redundant if daily protein target is met from complete protein sources.
+- Pre-workouts with proprietary blends: Undisclosed doses, contamination risk. Use caffeine tablets instead.
+- HMB: Weak evidence in trained athletes.
+- Detox products: No scientific basis.
+
+ANTI-DOPING NOTE: Any footballer subject to anti-doping testing must use only Informed Sport or HASTA batch-tested products. Supplement contamination is real and documented. Strict liability applies - you are responsible for every substance in your body.`;
+
+/* ---------- LOCAL PERSISTENCE (stops refresh-to-reset and re-farming free goes on this device) ---------- */
+const STORE_KEY="lc_supp_lead_v1";
+function loadState(){try{return JSON.parse(localStorage.getItem(STORE_KEY))||{};}catch(e){return {};}}
+function saveState(s){try{localStorage.setItem(STORE_KEY,JSON.stringify(s));}catch(e){}}
+function persist(){const s=loadState();s.used=questionsUsed;s.walled=walled;saveState(s);}
+
+/* ---------- GATE / EMAIL CAPTURE ---------- */
+function validEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);}
+function encodeForm(data){return Object.keys(data).map(k=>encodeURIComponent(k)+"="+encodeURIComponent(data[k])).join("&");}
+
+async function unlock(){
+  const name=document.getElementById("nameInput").value.trim();
+  const email=document.getElementById("emailInput").value.trim();
+  const err=document.getElementById("gateError");
+  const btn=document.getElementById("gateBtn");
+  if(!name){shake("nameInput");err.textContent="Pop your first name in.";return;}
+  if(!validEmail(email)){shake("emailInput");err.textContent="That email does not look right.";return;}
+  err.textContent="";btn.disabled=true;btn.textContent="One sec...";
+
+  // Fire the lead into Netlify Forms (Zapier picks it up -> MailerLite). Never trap the user if it hiccups.
+  try{
+    await fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},
+      body:encodeForm({"form-name":FORM_NAME,name:name,email:email,source:"supplement-cheatsheet"})});
+  }catch(e){/* deliver anyway */}
+
+  saveState({optedIn:true,name:name,email:email,used:0,walled:false});
+  document.getElementById("gate").style.display="none";
+  document.getElementById("app").style.display="flex";
+  updateCount();
+  setTimeout(()=>addMsg("assistant","Right "+esc(name)+", ask me about any supplement and I will tell you exactly what the evidence says for footballers. Dose, timing, whether it is worth your money. Fire away."),650);
+}
+function shake(id){const el=document.getElementById(id);el.classList.add("err");setTimeout(()=>el.classList.remove("err"),400);}
+
+document.getElementById("emailInput").addEventListener("keydown",e=>{if(e.key==="Enter")unlock();});
+document.getElementById("nameInput").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("emailInput").focus();});
+
+function nowTime(){const d=new Date();return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0");}
+
+let msgs=[],loading=false,questionsUsed=0,walled=false;
+
+function updateCount(){
+  const left=Math.max(0,FREE_LIMIT-questionsUsed);
+  const lbl=document.getElementById("countLabel");
+  lbl.textContent=walled?"":left+" free left";
+}
+
+const CHIPS=[
+  {m:t=>t.includes("fire away"),c:["What about creatine?","Is caffeine worth it?","Should I take beetroot?","What about protein powder?"]},
+  {m:t=>t.includes("built by liam carroll"),c:["Ask about another supplement","Is this safe for testing?"]},
+];
+function getChips(t){if(walled||questionsUsed>=FREE_LIMIT)return[];const tl=t.toLowerCase();for(const r of CHIPS){if(r.m(tl))return r.c;}return[];}
+
+function formatBubble(text){
+  const mark="Built by Liam Carroll Nutrition.";let main=text,tag=null;
+  const fi=text.indexOf(mark);if(fi!==-1){main=text.slice(0,fi).trim();tag=text.slice(fi).trim();}
+  let html="";const lines=main.split("\n");let i=0;
+  while(i<lines.length){
+    const l=lines[i].trim();if(!l){i++;continue;}
+    if((l.startsWith("**")&&l.endsWith("**")&&l.length>4)||l.startsWith("## ")||l.startsWith("### ")){
+      html+=`<div class="mh">${esc(l.replace(/^#+\s*/,"").replace(/^\*\*|\*\*$/g,""))}</div>`;
+    }else if(l.startsWith("- ")||l.startsWith("* ")){
+      html+="<ul>";
+      while(i<lines.length&&(lines[i].trim().startsWith("- ")||lines[i].trim().startsWith("* "))){html+=`<li>${inl(lines[i].trim().slice(2))}</li>`;i++;}
+      html+="</ul>";continue;
+    }else if(/^\d+\.\s/.test(l)){
+      html+="<ol>";
+      while(i<lines.length&&/^\d+\.\s/.test(lines[i].trim())){html+=`<li>${inl(lines[i].trim().replace(/^\d+\.\s/,""))}</li>`;i++;}
+      html+="</ol>";continue;
+    }else{html+=`<p>${inl(l)}</p>`;}
+    i++;
+  }
+  if(tag)html+=`<div class="pf-tag">${esc(tag)}</div>`;
+  return html;
+}
+function inl(t){return esc(t).replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>");}
+function esc(t){return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function scrollBottom(){const c=document.getElementById("chat");c.scrollTop=c.scrollHeight;}
+
+function addMsg(role,content){
+  const ex=document.getElementById("chipRow");if(ex)ex.remove();
+  const row=document.createElement("div");row.className=`wa-row ${role==="user"?"out":"in"}`;
+  const bub=document.createElement("div");bub.className="wa-bub";
+  if(role==="user"){bub.textContent=content;}else{bub.innerHTML=formatBubble(content);}
+  const meta=document.createElement("div");meta.className="wa-meta";
+  const t=document.createElement("span");t.className="wa-time";t.textContent=nowTime();
+  meta.appendChild(t);
+  if(role==="user"){const tick=document.createElement("span");tick.className="wa-tick";tick.innerHTML="&#10003;&#10003;";meta.appendChild(tick);}
+  const wrap=document.createElement("div");wrap.style.cssText="display:flex;flex-direction:column;max-width:72%;";
+  wrap.appendChild(bub);wrap.appendChild(meta);
+  row.appendChild(wrap);
+  document.getElementById("chat").appendChild(row);
+  if(role==="assistant"){
+    const chips=getChips(content);
+    if(chips.length){
+      const cr=document.createElement("div");cr.className="wa-chips";cr.id="chipRow";
+      chips.forEach(c=>{const b=document.createElement("button");b.className="wa-chip";b.textContent=c;b.onclick=()=>send(c);cr.appendChild(b);});
+      document.getElementById("chat").appendChild(cr);
+    }
+  }
+  scrollBottom();
+}
+
+function showTyping(){
+  const row=document.createElement("div");row.className="wa-typing-row";row.id="typing";
+  row.innerHTML=`<div class="wa-typing-bub"><span></span><span></span><span></span></div>`;
+  document.getElementById("chat").appendChild(row);scrollBottom();
+}
+function hideTyping(){const t=document.getElementById("typing");if(t)t.remove();}
+
+function showWall(){
+  walled=true;updateCount();persist();
+  const ex=document.getElementById("chipRow");if(ex)ex.remove();
+  const w=document.createElement("div");w.className="wa-wall";
+  w.innerHTML=`
+    <div class="wl-kicker">You have used your 5 free answers</div>
+    <h3>Want the full version, unlimited?</h3>
+    <p>That was a taster. Clients get this exact tool with no limit, plus the rest of the kit that actually builds performance:</p>
+    <ul>
+      <li>Unlimited supplement answers, any time</li>
+      <li>Your own Matchday Blueprint and Weekly Performance Engine</li>
+      <li>Rapid Reload recovery calculator and meal builder</li>
+      <li>Direct WhatsApp access to me, always on</li>
+    </ul>
+    <a class="wl-btn primary" href="${APPLY_URL}" target="_blank" rel="noopener">SEE IF YOU QUALIFY</a>
+    <a class="wl-btn secondary" href="${WHATSAPP_URL}" target="_blank" rel="noopener">OR MESSAGE ME ON WHATSAPP</a>`;
+  document.getElementById("chat").appendChild(w);
+  const inp=document.getElementById("input");inp.placeholder="You have used your 5 free questions";inp.disabled=true;
+  document.getElementById("sendBtn").disabled=true;
+  scrollBottom();
+}
+
+async function send(text){
+  text=text.trim();if(!text||loading||walled)return;
+  if(questionsUsed>=FREE_LIMIT){showWall();return;}
+  questionsUsed++;updateCount();persist();
+  msgs.push({role:"user",content:text});addMsg("user",text);
+  const inp=document.getElementById("input");inp.value="";inp.style.height="22px";
+  document.getElementById("sendBtn").disabled=true;loading=true;showTyping();
+  try{
+    const r=await fetch("/.netlify/functions/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({system:SYSTEM_PROMPT,messages:msgs})});
+    const raw=await r.text();
+    let d;try{d=JSON.parse(raw);}catch(_){throw new Error("Server hiccuped there. Give it another go.");}
+    if(d.error)throw new Error(d.error);
+    const reply=d.content?.[0]?.text||"Something went wrong. Try again.";
+    msgs.push({role:"assistant",content:reply});hideTyping();addMsg("assistant",reply);
+  }catch(e){
+    questionsUsed--;updateCount();persist();  // do not burn a free question on an error
+    hideTyping();const err="Error: "+(e.message||"Connection issue.");
+    msgs.push({role:"assistant",content:err});addMsg("assistant",err);
+  }
+  loading=false;
+  if(questionsUsed>=FREE_LIMIT){setTimeout(showWall,600);return;}
+  document.getElementById("sendBtn").disabled=!document.getElementById("input").value.trim();
+}
+
+function sendFromInput(){send(document.getElementById("input").value);}
+function handleKey(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendFromInput();}}
+function autoResize(el){el.style.height="22px";el.style.height=Math.min(el.scrollHeight,120)+"px";document.getElementById("sendBtn").disabled=!el.value.trim()||walled;}
+
+/* ---------- RETURNING VISITOR: no fresh 5, drop them back where they left off ---------- */
+(function(){
+  const s=loadState();
+  if(!s||!s.optedIn)return;
+  document.getElementById("gate").style.display="none";
+  document.getElementById("app").style.display="flex";
+  if(s.walled||(s.used||0)>=FREE_LIMIT){questionsUsed=FREE_LIMIT;showWall();return;}
+  questionsUsed=s.used||0;updateCount();
+  const left=FREE_LIMIT-questionsUsed;
+  setTimeout(()=>addMsg("assistant","Welcome back"+(s.name?", "+esc(s.name):"")+". You have got "+left+" free question"+(left===1?"":"s")+" left. Ask away."),400);
+})();
+</script>
+</body>
+</html>
