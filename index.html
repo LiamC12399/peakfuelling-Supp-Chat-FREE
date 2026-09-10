@@ -172,6 +172,8 @@ select.q-input option{background:var(--wa-header);color:var(--cream);}
   <input type="text" name="location">
   <input type="text" name="lead-quality">
   <input type="text" name="source">
+  <input type="text" name="lead-score">
+  <input type="text" name="qualified-lead">
 </form>
 
 <!-- QUALIFYING QUIZ GATE -->
@@ -195,7 +197,8 @@ select.q-input option{background:var(--wa-header);color:var(--cream);}
     <p class="q-sub">This covers caffeine and performance supplements, so I need to confirm your age before we start.</p>
     <div class="q-choices">
       <button class="q-choice" onclick="selectAge('18plus')"><div class="q-choice-dot"></div><div><div class="q-choice-label">18 or over</div></div></button>
-      <button class="q-choice" onclick="selectAge('under18')"><div class="q-choice-dot"></div><div><div class="q-choice-label">Under 18</div></div></button>
+      <button class="q-choice" onclick="selectAge('16plus')"><div class="q-choice-dot"></div><div><div class="q-choice-label">16 or 17</div></div></button>
+      <button class="q-choice" onclick="selectAge('under16')"><div class="q-choice-dot"></div><div><div class="q-choice-label">Under 16</div></div></button>
     </div>
    </div>
   </div>
@@ -430,7 +433,7 @@ function gateOut(id){
   document.getElementById(id).classList.add("active");
   document.getElementById("quiz").scrollTop=0;
 }
-function selectAge(v){quizAge=v;if(v==="under18"){gateOut("qs-out-age");}else{goScreen("qs-level",2);}}
+function selectAge(v){quizAge=v;if(v==="under16"||v==="16plus"){gateOut("qs-out-age");}else{goScreen("qs-level",2);}}
 function selectLevel(v){quizLevel=v;if(v==="amateur"||v==="academy"){gateOut("qs-out-level");}else{goScreen("qs-contact",3);}}
 function resetQuiz(){quizAge=null;quizLevel=null;goScreen("qs-age",1);}
 
@@ -452,15 +455,22 @@ async function submitLead(){
 
   // Lead quality: Pro = HOT always. Semi-pro + UK/Ireland = HOT, elsewhere = WARM.
   const ukIreland=["United Kingdom","Ireland"];
-  const leadQuality=(quizLevel==="pro"||ukIreland.indexOf(country)!==-1)?"HOT":"WARM";
+  const levelScore=quizLevel==="pro"?40:35;
+  const ageNum=quizAge==="18plus"?25:quizAge==="16plus"?16:0;
+  const ageScore=ageNum>=18?30:ageNum>=16?15:0;
+  const nearMarket=["Australia","New Zealand"];
+  const locationScore=ukIreland.indexOf(country)!==-1?30:nearMarket.indexOf(country)!==-1?20:5;
+  const leadScore=levelScore+ageScore+locationScore;
+  const leadQuality=leadScore>=70?"HOT":leadScore>=40?"WARM":"COLD";
+  const qualifiedLead=(quizLevel==="pro"||quizLevel==="semi")&&quizAge==="18plus"?"YES":"NO";
 
   // Netlify capture -> Zapier -> MailerLite + Netlify notification. Never trap the user if it hiccups.
   try{
     await fetch("/",{method:"POST",headers:{"Content-Type":"application/x-www-form-urlencoded"},
-      body:encodeForm({"form-name":FORM_NAME,"bot-field":"","first-name":fn,"email":em,"instagram-handle":ig,"position":pos,"level":quizLevel,"user-age":quizAge==="18plus"?"18":"17","location":country,"lead-quality":leadQuality,"source":SOURCE})});
+      body:encodeForm({"form-name":FORM_NAME,"bot-field":"","first-name":fn,"email":em,"instagram-handle":ig,"position":pos,"level":quizLevel,"user-age":quizAge==="18plus"?"18":quizAge==="16plus"?"16":"15","location":country,"lead-quality":leadQuality,"lead-score":leadScore,"qualified-lead":qualifiedLead,"source":SOURCE})});
   }catch(e){/* let them in anyway */}
   if(typeof fbq!=="undefined"){try{fbq("track","Lead");}catch(e){}}
-  if(typeof emailjs!=="undefined"){try{emailjs.send("service_34l9gku","4210.Lead",{first_name:fn,email:em,instagram:ig,level:quizLevel,position:pos,location:country,lead_quality:leadQuality,tool:SOURCE});}catch(e){}}
+  if(typeof emailjs!=="undefined"&&qualifiedLead==="YES"){try{emailjs.send("service_34l9gku","4210.Lead",{first_name:fn,email:em,instagram:ig,level:quizLevel,position:pos,location:country,lead_quality:leadQuality,lead_score:leadScore,qualified_lead:qualifiedLead,tool:SOURCE});}catch(e){}}
 
   saveState({optedIn:true,name:fn,email:em,used:0,walled:false});
   unlockChat(fn);
@@ -563,6 +573,11 @@ function showWall(){
       <li>Rapid Reload recovery calculator and meal builder</li>
       <li>Direct WhatsApp access to me, always on</li>
     </ul>
+        <a href="https://youtu.be/Er5NahZEdrQ" target="_blank" id="vsl-cta" style="display:none;text-decoration:none;width:100%;background:rgba(240,235,224,.06);border:1px solid rgba(240,235,224,.15);padding:1.4rem 1.6rem;text-align:center;cursor:pointer;transition:opacity .2s;margin-top:8px;margin-bottom:9px;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,235,224,.5);margin-bottom:.5rem;">While You\'re Here</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.2rem;line-height:1.1;color:#f0ebe0;margin-bottom:.3rem;">The 3 Things You Need To Dominate 90 Minutes</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:.9rem;line-height:1.1;color:rgba(240,235,224,.55);">And The 9 Reasons You\'re Not There Yet</div>
+    </a>
     <a class="wl-btn primary" href="${APPLY_URL}" target="_blank" rel="noopener">SEE IF YOU QUALIFY</a>
     <a class="wl-btn secondary" href="${INSTAGRAM_URL}" target="_blank" rel="noopener">OR MESSAGE ME ON INSTAGRAM</a>`;
   document.getElementById("chat").appendChild(w);
