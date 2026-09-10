@@ -487,7 +487,7 @@ async function submitLead(){
   if(typeof fbq!=="undefined"){try{fbq("track","Lead");}catch(e){}}
   if(typeof emailjs!=="undefined"&&qualifiedLead==="YES"){try{emailjs.send("service_34l9gku","4210.Lead",{first_name:fn,email:em,instagram:ig,level:quizLevel,position:pos,location:country,lead_quality:leadQuality,lead_score:leadScore,qualified_lead:qualifiedLead,tool:SOURCE});}catch(e){}}
 
-  saveState({optedIn:true,name:fn,email:em,used:0,walled:false});
+  saveState({optedIn:true,name:fn,email:em,used:0,walled:false,qualifiedLead:qualifiedLead});
   unlockChat(fn);
 }
 
@@ -596,6 +596,9 @@ function showWall(){
     <a class="wl-btn primary" href="${APPLY_URL}" target="_blank" rel="noopener">SEE IF YOU QUALIFY</a>
     <a class="wl-btn secondary" href="${INSTAGRAM_URL}" target="_blank" rel="noopener">OR MESSAGE ME ON INSTAGRAM</a>`;
   document.getElementById("chat").appendChild(w);
+  const vslEl=w.querySelector("#vsl-cta");
+  const _ql=loadState().qualifiedLead;
+  if(vslEl&&_ql==="YES") vslEl.style.display="block";
   const inp=document.getElementById("input");inp.placeholder="You have used your 5 free questions";inp.disabled=true;
   document.getElementById("sendBtn").disabled=true;
   scrollBottom();
