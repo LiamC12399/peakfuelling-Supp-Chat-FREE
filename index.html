@@ -567,6 +567,32 @@ function addMsg(role,content){
   scrollBottom();
 }
 
+function showVSL(){
+  if(document.getElementById("vsl-persistent")) return; // already shown
+  const _ql=loadState().qualifiedLead;
+  if(_ql!=="YES") return;
+  const vsl=document.createElement("div");
+  vsl.innerHTML=`<a href="https://youtu.be/Er5NahZEdrQ" target="_blank" id="vsl-persistent" style="text-decoration:none;display:block;background:rgba(240,235,224,.06);border:1px solid rgba(240,235,224,.15);padding:1.1rem 1.4rem;text-align:center;cursor:pointer;transition:opacity .2s;margin:8px 2px 4px;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,235,224,.45);margin-bottom:.4rem;">While You\'re Here</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.1rem;line-height:1.1;color:#f0ebe0;margin-bottom:.2rem;">The 3 Things You Need To Dominate 90 Minutes</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:.85rem;line-height:1.1;color:rgba(240,235,224,.5);">And The 9 Reasons You\'re Not There Yet</div>
+    </a>`;
+  document.getElementById("chat").appendChild(vsl.firstElementChild);
+  scrollBottom();
+}
+
+function msgsLeft(){
+  const left=FREE_LIMIT-questionsUsed;
+  return left>0?left+" question"+(left===1?"":"s")+" left after this":null;
+}
+
+function addFooterNote(text){
+  const note=document.createElement("div");
+  note.style.cssText="font-family:'Barlow Condensed',sans-serif;font-size:.6rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(240,235,224,.3);text-align:right;padding:2px 4px 6px;";
+  note.textContent=text;
+  document.getElementById("chat").appendChild(note);
+}
+
 function showTyping(){
   const row=document.createElement("div");row.className="wa-typing-row";row.id="typing";
   row.innerHTML=`<div class="wa-typing-bub"><span></span><span></span><span></span></div>`;
@@ -618,6 +644,8 @@ async function send(text){
     if(d.error)throw new Error(d.error);
     const reply=d.content?.[0]?.text||"Something went wrong. Try again.";
     msgs.push({role:"assistant",content:reply});hideTyping();addMsg("assistant",reply);
+    showVSL();
+    const _left=msgsLeft();if(_left)addFooterNote(_left);
   }catch(e){
     questionsUsed--;updateCount();persist();  // do not burn a free question on an error
     hideTyping();const err="Error: "+(e.message||"Connection issue.");
