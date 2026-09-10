@@ -156,6 +156,20 @@ select.q-input option{background:var(--wa-header);color:var(--cream);}
 <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','3403191219841069');fbq('track','PageView');</script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>(function(){if(typeof emailjs!=='undefined'){emailjs.init({publicKey:'B_3Is5PGeiMoU5w6I'});}})();</script>
+
+<script>/* ── GATE LOCK ── */
+(function(){
+  if(sessionStorage.getItem("pf_gated_out")==="1"){
+    document.addEventListener("DOMContentLoaded",function(){
+      var screens=document.querySelectorAll(".q-screen");
+      screens.forEach(function(s){s.classList.remove("active");});
+      var out=document.getElementById("qs-out-age");
+      if(out) out.classList.add("active");
+    });
+  }
+})();
+</script>
+
 </head>
 <body>
 
@@ -428,6 +442,7 @@ function goScreen(id,step){
   document.getElementById("quiz").scrollTop=0;
 }
 function gateOut(id){
+  sessionStorage.setItem("pf_gated_out","1");
   document.querySelectorAll("#quiz .q-screen").forEach(s=>s.classList.remove("active"));
   const p=document.getElementById("qProgress");if(p)p.style.visibility="hidden";
   document.getElementById(id).classList.add("active");
