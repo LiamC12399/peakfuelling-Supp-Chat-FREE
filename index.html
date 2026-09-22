@@ -485,7 +485,7 @@ async function submitLead(){
       body:encodeForm({"form-name":FORM_NAME,"bot-field":"","first-name":fn,"email":em,"instagram-handle":ig,"position":pos,"level":quizLevel,"user-age":quizAge==="18plus"?"18":quizAge==="16plus"?"16":"15","location":country,"lead-quality":leadQuality,"lead-score":leadScore,"qualified-lead":qualifiedLead,"source":SOURCE})});
   }catch(e){/* let them in anyway */}
   if(typeof fbq!=="undefined"){try{fbq("track","Lead");}catch(e){}}
-  if(typeof emailjs!=="undefined"&&qualifiedLead==="YES"){try{emailjs.send("service_34l9gku","LeadQual",{first_name:fn,email:em,instagram:ig,level:quizLevel,position:pos,location:country,lead_quality:leadQuality,lead_score:leadScore,qualified_lead:qualifiedLead,tool:SOURCE});}catch(e){}}
+  if(typeof emailjs!=="undefined"&&qualifiedLead==="YES"){try{emailjs.send("service_34l9gku","LeadQual",{audit_type:"Supplement Cheatsheet",lead_source:SOURCE,player_name:fn,player_email:em,player_ig:ig,player_country:country,gate_level:quizLevel==="pro"?"Professional":"Semi-Professional",lead_quality:leadQuality,score_100:String(leadScore),score_band:leadQuality,worst_axis:"N/A",pain_points:"Position: "+pos,axis_breakdown:"Position: "+pos+"\nLevel: "+(quizLevel==="pro"?"Professional":"Semi-Professional")+"\nCountry: "+country,summary_text:fn+" accessed the Supplement Cheatsheet. "+(quizLevel==="pro"?"Professional":"Semi-Professional")+" player in "+country+". Lead score: "+leadScore+" — "+leadQuality+"."});}catch(e){}}
 
   saveState({optedIn:true,name:fn,email:em,used:0,walled:false,qualifiedLead:qualifiedLead});
   unlockChat(fn);
